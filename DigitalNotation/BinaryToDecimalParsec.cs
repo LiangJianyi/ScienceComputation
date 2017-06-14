@@ -11,11 +11,26 @@ namespace ScienceComputation {
 		/// <param name="binary"></param>
 		/// <returns></returns>
 		public static string BinaryToDecimalParsec( string binary ) {
-			double result = 0.0;
-			for (int index = 0, pow = binary.Length - 1 ; index < binary.Length ; index++) {
-				result += Math.Pow( binary[ index ] , pow );
-			}
-			return result.ToString( );
+			Func<int , int , int , int> calc = null;
+			calc = ( index , pow , result ) =>
+				index < binary.Length ? calc( index + 1 , pow - 1 , result + (int)Math.Pow( binary[ index ] , pow ) ) : result;
+			return calc( 0 , binary.Length - 1 , 0 ).ToString( );
+		}
+		/// <summary>
+		/// 十进制转换二进制
+		/// </summary>
+		/// <param name="decimal"></param>
+		/// <returns></returns>
+		public static string DecimalToBinaryParsec( string @decimal ) {
+			Func<int , string> calc = null;
+			string result = String.Empty;
+			int rem;
+			calc = ( div ) => {
+				div = Math.DivRem( div , 2 , out rem );
+				result += rem.ToString( );
+				return div == 0 ? result.Reverse( ).ToString( ) : calc( div );
+			};
+			return calc( Convert.ToInt32( @decimal ) );
 		}
 	}
 }
