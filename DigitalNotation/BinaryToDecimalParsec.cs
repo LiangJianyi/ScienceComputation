@@ -13,7 +13,7 @@ namespace ScienceComputation {
 		public static string BinaryToDecimalParsec( string binary ) {
 			Func<int , int , int , int> calc = null;
 			calc = ( index , pow , result ) =>
-				index < binary.Length ? calc( index + 1 , pow - 1 , result + binary[ index ] * (int)Math.Pow( 2 , pow ) ) : result;
+				index < binary.Length ? calc( index + 1 , pow - 1 , result + Convert.ToInt32( binary[ index ] ) * (int)Math.Pow( 2 , pow ) ) : result;
 			return calc( 0 , binary.Length - 1 , 0 ).ToString( );
 		}
 		/// <summary>
